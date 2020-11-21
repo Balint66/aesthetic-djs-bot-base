@@ -3,7 +3,11 @@ const path = require('path')
 const { Collection } = require('discord.js')
 
 const getFiles = name => fs.readdirSync(path.resolve(__dirname, name))
-const getFile = (dir, file) => require(path.resolve(__dirname, dir, file))
+const getFile = (dir, file)=>{
+    const importedModule = require(path.resolve(__dirname, dir, file));
+    //ES6+ compatibiliti (aka with export keyword)
+    return importedModule.default || importedModule;
+}
 
 // Event Loader
 function loadEvents(client) {
